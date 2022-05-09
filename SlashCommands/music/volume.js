@@ -1,16 +1,16 @@
 const player = require("../../client/player");
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
 module.exports = {
-    name: "volume",
-    description: "change or check the volume of the current song",
-    options: [
-        {
-            name: "percentage",
-            description: "percentage to change the volume to",
-            type: "INTEGER",
-            required: false,
-        },
-    ],
+    data: new SlashCommandBuilder()
+        .setName('volume')
+        .setDescription("Adjust or check volume of the song")
+        .addIntegerOption(option => 
+            option.setName('percentage')
+            .setDescription("percentage to change the volume to")
+            .setMaxValue(100)
+            .setMinValue(1)
+        ),
     run: async (client, interaction) => {
         const volumePercentage = interaction.options.getInteger("percentage");
         const queue = player.getQueue(interaction.guildId);

@@ -1,8 +1,11 @@
 const player = require("../../client/player");
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
 module.exports = {
-    name: "queue",
-    description: "display the song queue",
+    data: new SlashCommandBuilder()
+        .setName("queue")
+        .setDescription("Get track list from the queue"),
+
     run: async (client, interaction) => {
         const queue = player.getQueue(interaction.guildId);
         if (!queue?.playing)
@@ -34,7 +37,7 @@ module.exports = {
                               }`
                             : ""
                     }`,
-                    color: "RANDOM",
+                    color: "#986c9c",
                     fields: [
                         {
                             name: "Now Playing",

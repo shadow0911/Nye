@@ -1,8 +1,11 @@
 const player = require("../../client/player");
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
 module.exports = {
-    name: "skip",
-    description: "skip the current song",
+    data: new SlashCommandBuilder()
+        .setName('skip')
+        .setDescription("Skip a track"),
+
     run: async (client, interaction, args) => {
         const queue = player.getQueue(interaction.guildId);
         if (!queue?.playing)

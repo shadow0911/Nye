@@ -1,8 +1,10 @@
 const player = require("../../client/player");
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
 module.exports = {
-    name: "now-playing",
-    description: "shows information about the current song",
+    data: new SlashCommandBuilder()
+        .setName('now-playing')
+        .setDescription("shows information about the current song"),
     run: async (client, interaction) => {
         const queue = player.getQueue(interaction.guildId);
         if (!queue?.playing)
@@ -24,7 +26,7 @@ module.exports = {
                             value: progress,
                         },
                     ],
-                    color: client.config.clientColor,
+                    color: "#986c9c",
                     footer: {
                         text: `Queued by ${queue.current.requestedBy.tag}`,
                     },

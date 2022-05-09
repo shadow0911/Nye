@@ -1,6 +1,7 @@
 const player = require("../../client/player");
 const axios = require("axios");
 const { MessageEmbed } = require("discord.js");
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
 const getLyrics = (title) =>
     new Promise(async (ful, rej) => {
@@ -46,16 +47,13 @@ const createResponse = async (title) => {
 };
 
 module.exports = {
-    name: "lyrics",
-    description: "display lyrics for the current song or a specific song",
-    options: [
-        {
-            name: "title",
-            description: "specific song for lyrics",
-            type: "STRING",
-            required: false
-        }
-    ],
+    data: new SlashCommandBuilder()
+        .setName("lyrics")
+        .setDescription('display lyrics for the current song or a specific song')
+        .addStringOption(option => 
+            option.setName("title")
+            .setDescription("specific song for lyrics")
+        ),
     run: async (client, interaction) => {
         const title = interaction.options.getString("title");
         const sendLyrics = (songTitle) => {
